@@ -1,0 +1,12 @@
+{
+  "name": "global-quality",
+  "version": "0.5.0",
+  "title": "Global Quality",
+  "author": "J_Hawkeye",
+  "factorio_version": "2.0",
+  "dependencies": [
+    "base >= 2.0.0",
+    "quality >= 1.0.0"
+  ],
+  "description": "Applies quality to everything."
+}
