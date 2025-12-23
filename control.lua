@@ -1,4 +1,4 @@
-﻿local EVENT = defines.events
+local EVENT = defines.events
 
 ----------------------------------------------------------------
 -- Global machine quality (ue_global_chance)
@@ -448,34 +448,25 @@ local function on_player_crafted_item(event)
     base_quality = base_quality.name or "normal"
   end
   local count = stack.count
+  local health = stack.health
 
-  -- Clear the original crafted stack; we will reinsert with rolled qualities.
-  stack.clear()
-
-  local result_counts = {}
-
-  for _ = 1, count do
-    local target_q = roll_quality(base_quality, effect, force)
-    result_counts[target_q] = (result_counts[target_q] or 0) + 1
+  if count <= 0 then
+    return
   end
 
-  for quality, c in pairs(result_counts) do
-    if c > 0 then
-      local inserted = player.insert{
-        name = name,
-        count = c,
-        quality = quality
-      }
-      local leftover = c - inserted
-      if leftover > 0 then
-        player.surface.spill_item_stack(player.position, {
-          name = name,
-          count = leftover,
-          quality = quality
-        }, true)
-      end
-    end
+  local target_q = roll_quality(base_quality, effect, force)
+  if target_q == base_quality then
+    return
   end
+
+  -- Update the crafted stack in place so queued crafts consume it correctly.
+  stack.set_stack({
+    name = name,
+    count = count,
+    health = health,
+    quality = target_q
+  })
+  
 end
 
 ----------------------------------------------------------------
