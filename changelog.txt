@@ -2,3 +2,8 @@ Version: 0.5.0
 Date: Dec 22 2025
   Major Features:
     - Initial playtest release.
+
+Version: 0.5.1
+Date: Dec 22 2025
+  Major Features:
+    - Fix hand crafting cloning prerequsite items to inventory
